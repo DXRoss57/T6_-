@@ -42,7 +42,7 @@ Teacher instructions: [`week09_midterm.md`](reports/instructions/week09_midterm.
 - [x] Images are stored in `reports/figures/`; three Compare images and the dashboard were visually checked locally.
 - [x] `AI_USAGE.md` includes the Week 09 record.
 - [x] `notebooks/09_midterm_chunks.ipynb` is saved with execution outputs.
-- [ ] Student has read and confirmed the AI-assisted explanations.
+- [x] Student has read and confirmed the AI-assisted explanations.
 - Submission method: Commit & Push the report, figures, AI log, and selector notebook, then check their display on GitHub. No `v0.5-midterm` tag or Release is needed.
 
 ### Midterm review status

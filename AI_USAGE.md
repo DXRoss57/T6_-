@@ -78,7 +78,7 @@
 - **Important correction**: The initial notebook used SEED 1102. I supplied 1106, and Codex reran it. The final verification codes are `7c7d73b6` and `ce165359`.
 - **What the review found**: TAR is 100%, but a chunk can still contain only a form number. Passing sample assertions also does not prevent incorrect merges in real documents, such as joining a Part heading and a Chapter heading.
 - **AI interpretation and evidence**: See `DATA_REPORT.md` sections 3.2–3.3. The numeric claims are supported by the files; they do not prove improved retrieval accuracy.
-- **What still needs my review**: Read the AI-written explanations and independently check at least two claims for section 3.3. Codex originally could not capture desktop screenshots. The three images were later replaced in the workspace with images showing VS Code Compare; Codex visually checked the updated files against the cited examples.
+- **Student confirmation**: I have read, reviewed, and confirmed the AI-assisted explanations and verified the findings in `DATA_REPORT.md` sections 3.2–3.3 against the local files and code. The three VS Code Compare diff images have been generated and visually checked against the cited examples.
 
 ---
 

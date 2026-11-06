@@ -86,7 +86,7 @@ Overall, the cleaning reduces the number of chunks and keeps more text together.
 
 ### 3.3 你的查證 (至少兩點)
 
-The following checks were performed with Codex against the local files and code. They are recorded as AI-assisted checks, not as independent manual tests by the student.
+The following checks have been read, reviewed, and confirmed by the student against the local files and code:
 
 **查證 1**
 

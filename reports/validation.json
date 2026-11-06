@@ -43,8 +43,8 @@
   ],
   "report_placeholders": 0,
   "pending": [
-    "Replace three rendered source comparisons with VS Code Compare screenshots",
-    "Student review, final screenshot update and v0.5-midterm Release"
+    "Student review and independent checks for section 3.3",
+    "Teacher acceptance of changes made after 2026-11-06 11:50 Asia/Taipei"
   ],
   "reference_comparison": {
     "source": "Teacher metrics photo supplied by user",
@@ -73,5 +73,34 @@
     "commit": "52a3d00",
     "pushed_to": "origin/main",
     "release_created": false
+  },
+  "submission_requirements": {
+    "source": "reports/instructions/week09_midterm.md",
+    "method": "Commit & Push",
+    "tag_required": false,
+    "release_required": false,
+    "deadline": "2026-11-06T11:50:00+08:00",
+    "weights_percent": {
+      "section_1": 10,
+      "section_2": 20,
+      "section_3": 30,
+      "section_4": 30,
+      "section_5": 10
+    },
+    "revision_is_after_deadline": true
+  },
+  "comparison_images": {
+    "1a_compare.png": {
+      "sha256": "4a8aa80c8fa53ef96b334b7c560a8fbe1f652b7bd559f32555005823d316b582",
+      "visual_review": "Shows VS Code Compare and the cited example; long lines are horizontally clipped."
+    },
+    "1b_compare.png": {
+      "sha256": "9803f1cf775b5ca3ddfa174d4757e6c3b68012e8e628196a26a743b14bffccb6",
+      "visual_review": "Shows VS Code Compare and the cited example; long lines are horizontally clipped."
+    },
+    "1c_compare.png": {
+      "sha256": "1398141a34613e48eb1cbabc673d96bf1ea55f35a2ab7cedd6d6c87c0181aebb",
+      "visual_review": "Shows VS Code Compare and the cited example; long lines are horizontally clipped."
+    }
   }
 }

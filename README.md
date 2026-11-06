@@ -33,19 +33,23 @@
 - [x] 在 GitHub 網頁上打開 notebook，看得到儀表板
 
 ### Week 9：期中評量 (Midterm Assessment)
-- [ ] 完成資料前處理報告 `DATA_REPORT.md`：draft saved; teacher reference photo checked and values entered; student review pending
-- [x] 完成指定 chunk 產生器 `notebooks/09_midterm_chunks.ipynb`
-- [ ] 報告所需之截圖：dashboard saved; replace the three rendered source comparisons with VS Code Compare screenshots
-- [ ] 於 GitHub Release 建立 Tag `v0.5-midterm`
+
+Teacher instructions: [`week09_midterm.md`](reports/instructions/week09_midterm.md).
+
+**Midterm does not require a Git Tag or Release.** Submit by Commit & Push. The teacher states a deadline of **2026-11-06 11:50 (Asia/Taipei)** and grades the version available at that time. Later updates need the teacher's acceptance.
+
+- [x] `DATA_REPORT.md` sections 1–5 drafted; section 3.4 includes verification codes.
+- [x] Images are stored in `reports/figures/`; three Compare images and the dashboard were visually checked locally.
+- [x] `AI_USAGE.md` includes the Week 09 record.
+- [x] `notebooks/09_midterm_chunks.ipynb` is saved with execution outputs.
+- [ ] Student has read and confirmed the AI-assisted explanations.
+- Submission method: Commit & Push the report, figures, AI log, and selector notebook, then check their display on GitHub. No `v0.5-midterm` tag or Release is needed.
 
 ### Midterm review status
 
-- Use `notebooks/01_Data_Ingestion.ipynb` for submission. It reruns the saved Docling Markdown through cleaning, chunking, metrics, and the dashboard; `USE_CACHED_MARKDOWN = False` enables fresh PDF conversion.
-- `01_Data_Injestion.ipynb` is a working compatibility copy. Its earlier version is preserved locally under `.ipynb_checkpoints/`.
-- Assigned chunks use SEED `1106`: verification codes `7c7d73b6` and `ce165359`.
-- `reports/prepare_midterm.py` rebuilds the three labelled source comparison figures. They are not VS Code screenshots.
-- Before submission: capture the required Compare screenshots, review the AI-assisted report and usage log, then commit/push and create Release `v0.5-midterm`.
-
-- Teacher reference evidence: `reports/figures/teacher_metrics_reference.jpg`; cleaned values 270.5, 100%, 0, and about 5.06.
-
-- Current report and notebook outputs have been committed and pushed to `origin/main` (checkpoint `52a3d00`). The final screenshot update and `v0.5-midterm` Release remain pending.
+- Use `notebooks/01_Data_Ingestion.ipynb` for the ingestion work. Its saved run reuses existing Docling Markdown, reruns cleaning, chunking, metrics, and the dashboard, and does not claim a new PDF conversion.
+- `01_Data_Injestion.ipynb` is an optional compatibility copy with the old spelling.
+- Assigned chunks use SEED `1106`, with verification codes `7c7d73b6` and `ce165359`.
+- Teacher reference evidence: `reports/figures/teacher_metrics_reference.jpg`; cleaned values 270.5, 100%, 0, and about 5.06. Own metrics remain unchanged.
+- `reports/prepare_midterm.py` generates optional rendered previews under `reports/source_previews/`. It does not replace the submission images in `reports/figures/`.
+- Earlier checkpoints were pushed before the deadline. The time of the latest correction does not establish that it was part of the version graded at 11:50.

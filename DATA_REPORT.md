@@ -4,7 +4,7 @@
 - **專案名稱**：T6_-
 - **完成的任務**：1-A header removal, 1-B bilingual heading merge, 1-C bilingual clause merge.
 - **Reproduction**: The saved Docling Markdown was reused. Cleaning, chunking, metrics, and the dashboard were rerun. This was not a new PDF conversion.
-- **Pending submission checks**: The three comparison figures below are rendered from real source files, not VS Code screenshots; replace them with VS Code Compare screenshots before submission to meet the stated screenshot requirement.
+- **Assessment instructions**: Follow the teacher's [Week 09 requirements](reports/instructions/week09_midterm.md). Midterm submission is by Commit & Push; no Git Tag or Release is required.
 
 ## 1. 資料集概覽 (Dataset Overview)
 
@@ -19,13 +19,13 @@ The number of chunks fell from 410 to 327, a drop of 83 (about 20.2%). Tasks 1-A
 
 ## 2. 清洗步驟 (Cleaning Steps)
 
-The examples below come from real files in `data/interim/`, not the classroom test passages. The figure builder is `reports/prepare_midterm.py`. Its figures show exact source excerpts with original line numbers. Actual VS Code Compare screenshots are still required before submission.
+The examples below come from real files in `data/interim/`, not the classroom test passages. Each task is documented below with its exact filename, search keyword, explanation, and a VS Code Compare image showing the relevant line changes. The current images were visually checked against the described examples.
 
 ### 2.1 任務 1-A：頁首頁尾溢出清除
 
 - 檔名：`Academic_Affairs/raw_A231060004_學生申請期中停修課程實施要點.md` and the matching `cleaned_` file.
 - 搜尋的文字：`學生申請期中停修課程實施要點`, near raw line 55, after Article 7's fee paragraph.
-- 比較圖：![1-A source comparison](reports/figures/1a_compare.png)
+- 比較圖：![1-A VS Code Compare](reports/figures/1a_compare.png)
 - 改變了什麼：The repeated regulation title after the fee paragraph was removed. The fee paragraph and following text remain.
 - 這對之後的問答檢索有什麼幫助：Removing a repeated page title reduces noise and can prevent false chunk boundaries when the title has a `##` marker.
 - 有沒有改錯：Yes, the rule can also remove a useful title. In the same file, raw line 7 is the regulation name on the cover. It is removed too. The rule checks the text of the line but does not check whether it is a page header or the first document title. The regulation name should also be kept in document metadata.
@@ -34,7 +34,7 @@ The examples below come from real files in `data/interim/`, not the classroom te
 
 - 檔名：`Academic_Affairs/raw_A232060013_學生抵免學分辦法.md` and the matching `cleaned_` file.
 - 搜尋的文字：`Course Substitution Application Form`; raw lines 344–346, cleaned line 329.
-- 比較圖：![1-B source comparison](reports/figures/1b_compare.png)
+- 比較圖：![1-B VS Code Compare](reports/figures/1b_compare.png)
 - 改變了什麼：The Chinese course substitution form heading and its English heading were joined into one line with ` / `. Only the first `##` marker remains.
 - 這對之後的問答檢索有什麼幫助：Both language versions stay with the same form content. The English heading no longer starts a separate chunk.
 - 有沒有改錯：Yes. In `cleaned_A232020018_大學部學則.md`, line 220 contains `## Part 2 Undergraduate Division / Chapter 1 Admissions`. These are different levels of the document, not a translation pair. Task 1-B merged them because they were adjacent headings. Section 4 gives the evidence and a possible fix.
@@ -43,7 +43,7 @@ The examples below come from real files in `data/interim/`, not the classroom te
 
 - 檔名：`Academic_Affairs/raw_A232020018_大學部學則.md` and the matching `cleaned_` file.
 - 搜尋的文字：`Article 2 The University shall recruit`; raw lines 240–241, cleaned line 222.
-- 比較圖：![1-C source comparison](reports/figures/1c_compare.png)
+- 比較圖：![1-C VS Code Compare](reports/figures/1c_compare.png)
 - 改變了什麼：The Chinese Article 2 text and the English Article 2 text were joined with ` / `. Their content was kept.
 - 這對之後的問答檢索有什麼幫助：The Chinese and English versions stay next to each other. A later system that splits list items is less likely to separate this translation pair. In the current heading-based splitter, they were already in the same chunk, so Task 1-C does not reduce the chunk count here.
 - 有沒有改錯：Yes. In the same cleaned file, line 214 is `<!-- formula-not-decoded --> / Article 1 The Academic Regulations for Undergraduate Studies`. The rule joined an unresolved conversion marker to an English clause. It only checks that the second item starts with an English letter; it does not check that the previous text is a valid Chinese clause. A passing classroom assertion does not prove that all real text was merged correctly.
@@ -63,7 +63,7 @@ Source: the regenerated `metrics.json` and the outputs of section 6 in `01_Data_
 
 ![dashboard](reports/figures/dashboard.png)
 
-Reference source: The teacher's metrics photo supplied by the user, saved as [teacher_metrics_reference.jpg](reports/figures/teacher_metrics_reference.jpg). The cleaned reference values are median length 270.5, TAR 1.0 (100%), SDV 0.0, and entropy 5.0623172389748445 (rounded to 5.06 above). These replace the earlier values from a classmate's report.
+Reference source: The teacher's metrics photo supplied by the user, saved as [teacher_metrics_reference.jpg](reports/figures/teacher_metrics_reference.jpg). The cleaned reference values are median length 270.5, TAR 1.0 (100%), SDV 0.0, and entropy 5.0623172389748445 (rounded to 5.06 above).
 
 Reference comparison: My results do not fully match the teacher's reference: TAR and SDV match, but median length is 297 rather than 270.5, and median entropy is about 5.14 rather than 5.06. Different cleaning or chunk boundaries may explain this. Sections 2 and 4 show incorrect merges in my files, but without the teacher's code and data I cannot confirm the exact cause.
 

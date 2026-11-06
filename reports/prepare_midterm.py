@@ -1,10 +1,10 @@
-"""Rebuild the midterm evidence from saved Docling Markdown, without downloading models."""
+"""Build optional source previews; never overwrite the submission screenshots."""
 from pathlib import Path
 import textwrap
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
-FIGURES = ROOT / 'reports/figures'
+FIGURES = ROOT / 'reports/source_previews'
 FIGURES.mkdir(parents=True, exist_ok=True)
 
 def source(prefix, kind='cleaned'):
@@ -45,4 +45,4 @@ comparison('1a_compare.png','A231060004',49,61,47,55,'Task 1-A: Remove the repea
 comparison('1b_compare.png','A232060013',344,348,329,333,'Task 1-B: Join the Chinese and English course substitution form headings')
 comparison('1c_compare.png','A232020018',240,241,222,222,'Task 1-C: Join Article 2 with its English translation')
 
-print('Rebuilt three source comparison images.')
+print('Saved optional source previews under reports/source_previews; submission screenshots unchanged.')

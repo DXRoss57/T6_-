@@ -78,10 +78,12 @@
 - **Important correction**: The initial notebook used SEED 1102. I supplied 1106, and Codex reran it. The final verification codes are `7c7d73b6` and `ce165359`.
 - **What the review found**: TAR is 100%, but a chunk can still contain only a form number. Passing sample assertions also does not prevent incorrect merges in real documents, such as joining a Part heading and a Chapter heading.
 - **AI interpretation and evidence**: See `DATA_REPORT.md` sections 3.2–3.3. The numeric claims are supported by the files; they do not prove improved retrieval accuracy.
-- **What still needs my review**: Read the AI-written explanations, replace the three rendered source comparisons with actual VS Code Compare screenshots. The desktop connection was unavailable, so Codex could not capture those screenshots.
+- **What still needs my review**: Read the AI-written explanations and independently check at least two claims for section 3.3. Codex originally could not capture desktop screenshots. The three images were later replaced in the workspace with images showing VS Code Compare; Codex visually checked the updated files against the cited examples.
 
 ---
 
 - **Reference update**: I supplied a classmate's table with reference values 273.0, 1.0, 0.0, and 5.05. Codex entered them as classmate-supplied values and compared them with my unchanged results. Median length and entropy do not match; the exact cause has not been confirmed.
 
 - **Teacher evidence update**: I later supplied a photo of the teacher's metrics. Codex saved an unchanged copy as `reports/figures/teacher_metrics_reference.jpg` and replaced the classmate-supplied reference values with 270.5, 1.0, 0.0, and 5.0623172389748445. My own metrics were not changed. The raw entropy also differs slightly at full precision, so the exact cause of the differences remains unconfirmed.
+
+- **Teacher instruction correction**: I supplied `week09_midterm.md`. It explicitly says the midterm needs no Git Tag or Release, only Commit & Push by 2026-11-06 11:50 (Asia/Taipei). Codex corrected its earlier Release advice, updated the checklist and README, and preserved the newer Compare images. This correction was made after the deadline; acceptance of a later version must be confirmed with the teacher.

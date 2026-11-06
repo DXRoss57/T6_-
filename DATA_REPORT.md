@@ -1,163 +1,163 @@
 # 資料前處理報告 (Data Preparation Report)
 
-> 期中評量 · NLP 自然語言處理 115-S1
-> 填寫方式：請把所有「（ ）」與 `___` 替換成你自己的內容，並刪除 `>` 開頭的說明文字。
-
 - **學號 / 姓名**：U12627901 / 黃章盛
 - **專案名稱**：T6_-
-- **完成的任務**：- [ ] 1-A 頁首頁尾清除　- [ ] 1-B 雙語標題合併　- [ ] 1-C 雙語條文合併
-
----
+- **完成的任務**：1-A header removal, 1-B bilingual heading merge, 1-C bilingual clause merge.
+- **Reproduction**: The saved Docling Markdown was reused. Cleaning, chunking, metrics, and the dashboard were rerun. This was not a new PDF conversion.
+- **Pending submission checks**: The three comparison figures below are rendered from real source files, not VS Code screenshots; replace them with VS Code Compare screenshots before submission to meet the stated screenshot requirement.
 
 ## 1. 資料集概覽 (Dataset Overview)
 
-> 數字來源：`01_Data_Ingestion.ipynb` 第 2 節 (掃描 PDF) 與第 5 節 (批次處理) 的輸出。
-
 | 類別 (Cluster) | PDF 數量 | 清洗前 chunk 數 | 清洗後 chunk 數 |
 |---|---|---|---|
-| （例：Academic_Affairs） | | | |
-| | | | |
-| **合計** | | | |
+| Academic_Affairs | 3 | 96 | 64 |
+| Library_Information | 3 | 248 | 209 |
+| Student_Affairs | 3 | 66 | 54 |
+| **合計** | **9** | **410** | **327** |
 
-**問題 (2–3 句)：** 清洗後 chunk 數量變少了多少？是哪個任務造成的？有沒有哪個任務**不影響** chunk 數量？為什麼？
-
-> 提示：chunk 是用什麼規則切開的？請看 notebook 第 5 節的 `chunking_regex`。
-
-___
+The number of chunks fell from 410 to 327, a drop of 83 (about 20.2%). Tasks 1-A and 1-B remove or join `##` headings, so they reduce the number of boundaries used by `chunking_regex = r'\n(?=##\s)'`. Task 1-C joins list text without changing the heading boundaries in this dataset, so it does not change the chunk count here.
 
 ## 2. 清洗步驟 (Cleaning Steps)
 
-> **截圖來源：** `data/interim/<類別>/` 中的 `raw_*.md` (清洗前) 與 `cleaned_*.md` (清洗後)，也就是批次處理存下的**真實檔案**。
->
-> **[重要] 不可使用 notebook 中的範例。** notebook 任務 1-A、1-B、1-C 的測試文字 (第二十一條、明志科技大學 / Ming Chi University of Technology、第十五條 / Article 15) **不能**作為你的截圖。請在真實檔案中**另找一處**，可以是其他 PDF 的檔案。使用範例的截圖**不給分**。
->
-> **截圖方法 (VS Code 比較檢視)：**
-> 1. 在檔案總管對 `raw_<檔名>.md` 按右鍵 → **Select for Compare**。
-> 2. 對同一份文件的 `cleaned_<檔名>.md` 按右鍵 → **Compare with Selected**。
-> 3. 左右並排顯示，紅色 = 刪除，綠色 = 新增或修改。按 `Ctrl + F` 搜尋，找到該任務造成的變更。
-> 4. 每個任務截**一張**圖，存到 `reports/figures/`，**檔名必須完全相同** (否則圖片不會顯示)：
->    * 任務 1-A → `1a_compare.png`
->    * 任務 1-B → `1b_compare.png`
->    * 任務 1-C → `1c_compare.png`
+The examples below come from real files in `data/interim/`, not the classroom test passages. The figure builder is `reports/prepare_midterm.py`. Its figures show exact source excerpts with original line numbers. Actual VS Code Compare screenshots are still required before submission.
 
 ### 2.1 任務 1-A：頁首頁尾溢出清除
 
-- 檔名：___　搜尋的文字：___
-- 截圖 (存為 `reports/figures/1a_compare.png`)：![1-A](reports/figures/1a_compare.png)
-- 改變了什麼：___
-- 這對之後的問答檢索有什麼幫助：___
-- 這個任務有沒有**改錯**的地方 (把不該改的也改了)？若有，寫出檔名與搜尋的文字；若沒有，寫「沒有發現」：___
+- 檔名：`Academic_Affairs/raw_A231060004_學生申請期中停修課程實施要點.md` and the matching `cleaned_` file.
+- 搜尋的文字：`學生申請期中停修課程實施要點`, near raw line 55, after Article 7's fee paragraph.
+- 比較圖：![1-A source comparison](reports/figures/1a_compare.png)
+- 改變了什麼：The repeated regulation title after the fee paragraph was removed. The fee paragraph and following text remain.
+- 這對之後的問答檢索有什麼幫助：Removing a repeated page title reduces noise and can prevent false chunk boundaries when the title has a `##` marker.
+- 有沒有改錯：Yes, the rule can also remove a useful title. In the same file, raw line 7 is the regulation name on the cover. It is removed too. The rule checks the text of the line but does not check whether it is a page header or the first document title. The regulation name should also be kept in document metadata.
 
 ### 2.2 任務 1-B：雙語標題合併
 
-- 檔名：___　搜尋的文字：___
-- 截圖 (存為 `reports/figures/1b_compare.png`)：![1-B](reports/figures/1b_compare.png)
-- 改變了什麼：___
-- 這對之後的問答檢索有什麼幫助：___
-- 這個任務有沒有**改錯**的地方 (把不該改的也改了)？若有，寫出檔名與搜尋的文字；若沒有，寫「沒有發現」：___
+- 檔名：`Academic_Affairs/raw_A232060013_學生抵免學分辦法.md` and the matching `cleaned_` file.
+- 搜尋的文字：`Course Substitution Application Form`; raw lines 344–346, cleaned line 329.
+- 比較圖：![1-B source comparison](reports/figures/1b_compare.png)
+- 改變了什麼：The Chinese course substitution form heading and its English heading were joined into one line with ` / `. Only the first `##` marker remains.
+- 這對之後的問答檢索有什麼幫助：Both language versions stay with the same form content. The English heading no longer starts a separate chunk.
+- 有沒有改錯：Yes. In `cleaned_A232020018_大學部學則.md`, line 220 contains `## Part 2 Undergraduate Division / Chapter 1 Admissions`. These are different levels of the document, not a translation pair. Task 1-B merged them because they were adjacent headings. Section 4 gives the evidence and a possible fix.
 
 ### 2.3 任務 1-C：雙語條文合併
 
-- 檔名：___　搜尋的文字：___
-- 截圖 (存為 `reports/figures/1c_compare.png`)：![1-C](reports/figures/1c_compare.png)
-- 改變了什麼：___
-- 這對之後的問答檢索有什麼幫助：___
-- 這個任務有沒有**改錯**的地方 (把不該改的也改了)？若有，寫出檔名與搜尋的文字；若沒有，寫「沒有發現」：___
+- 檔名：`Academic_Affairs/raw_A232020018_大學部學則.md` and the matching `cleaned_` file.
+- 搜尋的文字：`Article 2 The University shall recruit`; raw lines 240–241, cleaned line 222.
+- 比較圖：![1-C source comparison](reports/figures/1c_compare.png)
+- 改變了什麼：The Chinese Article 2 text and the English Article 2 text were joined with ` / `. Their content was kept.
+- 這對之後的問答檢索有什麼幫助：The Chinese and English versions stay next to each other. A later system that splits list items is less likely to separate this translation pair. In the current heading-based splitter, they were already in the same chunk, so Task 1-C does not reduce the chunk count here.
+- 有沒有改錯：Yes. In the same cleaned file, line 214 is `<!-- formula-not-decoded --> / Article 1 The Academic Regulations for Undergraduate Studies`. The rule joined an unresolved conversion marker to an English clause. It only checks that the second item starts with an English letter; it does not check that the previous text is a valid Chinese clause. A passing classroom assertion does not prove that all real text was merged correctly.
 
 ## 3. 評估指標與 AI 解讀查證 (Metrics & Verifying the AI's Interpretation)
 
 ### 3.1 指標數據表
 
-> 數字來源：專案根目錄的 `metrics.json`。[1]、[2] 必填；[3]、[4] 選填。
-> 「參考值」由老師在課堂上公布 (完成全部任務的結果)。
+Source: the regenerated `metrics.json` and the outputs of section 6 in `01_Data_Ingestion.ipynb`.
 
 | 指標 | Raw | Cleaned (你的) | Cleaned (參考值) |
 |---|---|---|---|
-| [1] 中位數長度 Median Length | | | |
-| [2] 拓撲錨定率 TAR | | | |
-| [3] 深度變異量 SDV (選填) | | | |
-| [4] 中位數資訊熵 Entropy (選填) | | | |
-
-> **儀表板截圖：** 你自己的 `01_Data_Ingestion.ipynb` **第 6 節**輸出的 4 拼圖儀表板 (第 8 週執行並保留的輸出)。截圖後存為 `reports/figures/dashboard.png`。第 3.2 節也會用到這張截圖。
+| [1] Median Length | 205.0 | 297.0 | 270.5 |
+| [2] TAR | 100.00% | 100.00% | 100.00% |
+| [3] SDV (optional) | 0.00 | 0.00 | 0.00 |
+| [4] Median Entropy (optional) | 4.72 | 5.14 | 5.06 |
 
 ![dashboard](reports/figures/dashboard.png)
 
-你的 Cleaned 結果與參考值一致嗎？若一致，寫「一致」；若不一致，找出原因。（1 句）
+Reference source: The teacher's metrics photo supplied by the user, saved as [teacher_metrics_reference.jpg](reports/figures/teacher_metrics_reference.jpg). The cleaned reference values are median length 270.5, TAR 1.0 (100%), SDV 0.0, and entropy 5.0623172389748445 (rounded to 5.06 above). These replace the earlier values from a classmate's report.
 
-___
+Reference comparison: My results do not fully match the teacher's reference: TAR and SDV match, but median length is 297 rather than 270.5, and median entropy is about 5.14 rather than 5.06. Different cleaning or chunk boundaries may explain this. Sections 2 and 4 show incorrect merges in my files, but without the teacher's code and data I cannot confirm the exact cause.
+
+The teacher's raw median entropy is 4.722966879142464; mine is 4.719958679606001. Both round to 4.72, but the exact values differ slightly. This suggests the raw text or chunks may also differ, so the cleaned differences cannot be attributed only to the cleaning rules. My own values in `metrics.json` and the dashboard have been kept unchanged.
+
 
 ### 3.2 AI 的解讀
 
-> 把第 3.1 節的儀表板截圖 (`dashboard.png`) 交給 AI，請它解讀結果。將 AI 的回答**完整貼在這裡**，並註明使用的 AI 工具。
-
-- 使用的 AI 工具：___
+- 使用的 AI 工具：OpenAI Codex.
+- Input: `reports/figures/dashboard.png`, checked together with the exact values in `metrics.json`.
+- Full AI interpretation:
 
 ```text
-（貼上 AI 的回答）
+1. The median chunk length rises from 205 to 297 characters. This is consistent with joining headings and removing some short header chunks. The length plot still has many large outliers, so cleaning has not solved the long-chunk problem.
+2. TAR is 100% before and after cleaning. All chunks start with a heading marker according to the code's check. This does not prove that the headings are correct or that every chunk has useful content.
+3. All starting headings are at level 2, so the depth variance is 0 in both datasets. The chart does not show a restored hierarchy between parts and chapters.
+4. Median character entropy rises from about 4.72 to 5.14 bits per character. This shows a change in character diversity. It does not prove better answers or better retrieval. Tables, repeated text, and short form numbers still need inspection.
+Overall, the cleaning reduces the number of chunks and keeps more text together. Some errors remain, including incorrect heading merges and large form tables. Retrieval quality still needs to be tested with real questions.
 ```
 
 ### 3.3 你的查證 (至少兩點)
 
-> 挑 AI 說得最肯定的兩句話，回到你的檔案或程式中找證據：它說的是真的嗎？
+The following checks were performed with Codex against the local files and code. They are recorded as AI-assisted checks, not as independent manual tests by the student.
 
 **查證 1**
-- AI 的說法：___
-- 我查了什麼 (哪個檔案、哪個 chunk、哪段程式)：___
-- 結論：正確 / 部分正確 / 錯誤，因為 ___
+
+- AI 的說法：The median chunk length rises from 205 to 297 characters.
+- 我查了什麼：All 18 raw and cleaned JSON files in `data/processed/` were read again. There are 410 raw chunks and 327 cleaned chunks. The median of `len(record["text"])` was calculated for each group and compared with `metrics.json` and `get_lengths()` in notebook section 6.
+- 結論：Correct. The results are 205 and 297 characters. This supports the numeric claim, but it does not show that every chunk became longer or that retrieval improved.
 
 **查證 2**
-- AI 的說法：___
-- 我查了什麼：___
-- 結論：正確 / 部分正確 / 錯誤，因為 ___
+
+- AI 的說法：TAR is 100%, but this does not prove that every chunk is useful.
+- 我查了什麼：The notebook's `get_tar()` checks only `re.match(r'^\s*#+', record["text"])`. All 410 raw and 327 cleaned chunks pass this check. The assigned cleaned chunk at position 10 in `Academic_Affairs/cleaned_A231060004_學生申請期中停修課程實施要點_processed.json` contains only `## 表單號碼：A031060104`.
+- 結論：Correct. A chunk with only a form number still counts as anchored. TAR alone cannot measure whether a chunk answers a question or keeps the right context.
+
+**查證 3 (optional)**
+
+- AI 的說法：All starting headings are at level 2, so the depth variance is 0.
+- 我查了什麼：The leading `#` characters were counted again for every raw and cleaned chunk, following `get_depths()` in section 6.
+- 結論：Correct. All 410 raw and 327 cleaned starting headings have depth 2. This metric does not confirm that the original PDF hierarchy was recovered.
 
 ### 3.4 實際證據：你被指定的 chunk
 
-> 執行 `09_midterm_chunks.ipynb`：填入你的學號與老師在課堂上公布的 SEED，按 Run All。
-> 每位同學拿到的 chunk 不同。請**連同驗證碼**一起填入。
-> 程式只顯示前 400 字元的預覽。請在 VS Code 打開程式列出的**閱讀用檔案** (`data/interim/` 中的 `cleaned_*.md`，與 JSON 內容相同但有正常換行)，按 `Ctrl + G` 輸入程式給的**行號** (或按 `Ctrl + F` 搜尋「搜尋用」文字)，從該行讀到下一個 `## ` 標題為止，就是**完整**的 chunk。
-
-- **SEED**：___
+- **SEED**：1106
+- **學號**：U12627901
 
 **(a) 很長的 chunk**
-- 資料檔 (JSON)：___　位置：第 ___ 個 (從 0 開始數)　長度：___ 字元　驗證碼：___
-- 閱讀用檔案 (`.md`)：___　從第 ___ 行開始
-- 前 3 行內容：
-  ```text
-  （貼上）
-  ```
-- 這是什麼樣的文字？為什麼會這麼長？___
-- 之後做問答檢索時，這麼長的 chunk 可能造成什麼問題？___
+
+- 資料檔 (JSON)：`data/processed/Academic_Affairs/cleaned_A232060013_學生抵免學分辦法_processed.json`　位置：第 25 個 (從 0 開始數)　長度：4367 字元　驗證碼：`7c7d73b6`
+- 閱讀用檔案 (`.md`)：`data/interim/Academic_Affairs/cleaned_A232060013_學生抵免學分辦法.md`　從第 277 行開始
+- 前 3 行內容 (包含第 2 行的空白行)：
+
+```text
+## 明 志 科 技 大 學 學 分 抵 免 申 請 書 Ming Chi University of Technology Credit Transfer Application Form
+
+- [ ] □博士班 □碩士班 □四技部
+```
+
+- 這是什麼樣的文字？為什麼會這麼長？This is a credit transfer application form. It has student details, course information, review options, and approval fields. The table contains repeated text, many spaces, and Markdown table symbols. The code splits text only at `##` headings, so the whole table stays in one chunk. This makes the chunk 4367 characters long.
+- 之後做問答檢索時，這麼長的 chunk 可能造成什麼問題？The search system may return a lot of repeated text that is not needed for the question. This uses more space in the model's input and may make the useful information harder to find. If the system has a small input limit, it may cut off part of the table. A possible fix is to remove extra spaces and split the table into smaller parts. Each part should keep the form title and column names.
 
 **(b) 資訊熵很低的 chunk**
-- 資料檔 (JSON)：___　位置：第 ___ 個 (從 0 開始數)　資訊熵：___　驗證碼：___
-- 閱讀用檔案 (`.md`)：___　從第 ___ 行開始
-- 內容：
-  ```text
-  （貼上）
-  ```
-- 為什麼它的資訊熵這麼低？它對問答檢索有用嗎？___
+
+- 資料檔 (JSON)：`data/processed/Academic_Affairs/cleaned_A231060004_學生申請期中停修課程實施要點_processed.json`　位置：第 10 個 (從 0 開始數)　資訊熵：3.50 bits/字元　驗證碼：`ce165359`
+- 閱讀用檔案 (`.md`)：`data/interim/Academic_Affairs/cleaned_A231060004_學生申請期中停修課程實施要點.md`　從第 73 行開始
+- 內容 (完整，共 18 字元)：
+
+```text
+## 表單號碼：A031060104
+```
+
+- 為什麼它的資訊熵這麼低？它對問答檢索有用嗎？This chunk only contains a form number. It has few different characters, and some characters appear more than once. Its character entropy is about 3.50 bits per character. This is higher than the long chunk's entropy of 3.06. The code selects the two chunks from different groups: this one comes from the 20 chunks with the lowest entropy, so it does not have to be the lowest of all. The form number is useful when someone searches for that exact form. However, this chunk alone cannot answer questions about course withdrawal rules or steps. We could store the number as metadata, or keep it with the form text. Low entropy does not always mean the text is useless.
 
 ## 4. 一個尚未解決的問題 (One Remaining Problem)
 
-> 打開 `data/interim/` 中任一個 `cleaned_*.md` (與 `data/processed/` 的 JSON 內容相同，但有正常換行，比較好讀)，找出一個清洗後**仍然有問題**的 chunk。
-> 每個 chunk 從一個 `## ` 標題開始，到下一個 `## ` 標題之前結束。
-> 例如：只有標題沒有內文、表格亂掉、中英文沒有對齊、還有殘留的頁首頁尾、斷行造成的多餘空白，或是**清洗造成的錯誤** (誤合併、誤刪除)。
-> **不可**使用第 3.4 節的兩個 chunk。
-
-- **檔名** (`cleaned_*.md`)：___　**從第 ___ 行開始** (VS Code 左側的行號)　**標題**：___
-- **我是怎麼找到的** (例如：搜尋了什麼、看了哪個檔案)：___
-- **問題 chunk (貼上部分內容)**：
+- **檔名**：`data/interim/Academic_Affairs/cleaned_A232020018_大學部學則.md`
+- **從第 220 行開始**；**標題**：`## Part 2 Undergraduate Division / Chapter 1 Admissions`
+- **JSON location**：`data/processed/Academic_Affairs/cleaned_A232020018_大學部學則_processed.json`, position 5 (zero-based). This is different from both assigned chunks in section 3.4.
+- **我是怎麼找到的**：Codex compared the real raw and cleaned files and searched for `Part 2 Undergraduate Division`. The raw file has two separate headings at lines 236 and 238.
+- **問題 chunk (部分內容)**：
 
 ```text
-（貼上）
+## Part 2 Undergraduate Division / Chapter 1 Admissions
+
+- 第二條 本校於每學年之始，公開招考四年制各系組(學位學程)一 年級新生，其招生簡章另訂之。 / Article 2 The University shall recruit first year students for 4-year programs in all departments (Bachelor Program) at the beginning of each academic year upon approval of the proposed admission procedures. The admission brochure shall be stipulated separately.
 ```
 
-- **問題是什麼**：___
-- **可能的原因** (PDF 本身？Docling 轉換？清洗的正則表示式？切塊規則？)：___
-- **具體的修正方法** (例如：一條規則、一個正則表示式的構想、長度上限)：___
-- **對問答檢索的影響**：___
+- **問題是什麼**：Task 1-B joined a part heading and a chapter heading. They are different document levels, not Chinese and English versions of the same heading.
+- **可能的原因**：Docling exported both headings as `##`. The cleaning regex then merged any adjacent headings without checking their language, meaning, or section type.
+- **具體的修正方法**：Before merging, identify labels such as Part, Chapter, Article, 篇, 章, and 條. Keep different section levels separate, and store their parent-child relationship as metadata. Only merge confirmed translations of the same heading. Add a counterexample using these two English headings. This is a proposed fix; the current cleaning rules were kept unchanged for the reported experiment.
+- **對問答檢索的影響**：The current result loses the clear boundary between the part and the chapter. A retrieval system may return a broad mixed chunk or give the wrong section label. Keeping the hierarchy can help it return the right section and citation.
 
 ## 5. AI 協作 (AI Collaboration)
 
-- 本次作業的 AI 協作紀錄請見 [`AI_USAGE.md`](AI_USAGE.md) 的「Week 04 / 08」與「Week 09」段落。
-- 這次使用 AI 最大的收穫或教訓是 ___（請具體：例如提示詞中哪一段最關鍵、AI 哪一句解讀不正確）
+- The AI collaboration record is in [`AI_USAGE.md`](AI_USAGE.md), under Week 04 / 08 and Week 09.
+- My main lesson from this AI-assisted review is that a passing assertion or a high metric is not enough. The sample assertions passed, but real files still contain incorrect merges. AI claims should be checked with exact files, line numbers, and the code used to calculate each metric. I should also keep the teacher's reference values separate from my own results.

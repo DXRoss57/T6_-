@@ -1,0 +1,72 @@
+{
+  "notebooks": {
+    "01_Data_Ingestion.ipynb": {
+      "code_cells": 11,
+      "unexecuted": 0,
+      "errors": 0
+    },
+    "01_Data_Injestion.ipynb": {
+      "code_cells": 11,
+      "unexecuted": 0,
+      "errors": 0
+    },
+    "09_midterm_chunks.ipynb": {
+      "code_cells": 3,
+      "unexecuted": 0,
+      "errors": 0
+    }
+  },
+  "recomputed_metrics": {
+    "raw": {
+      "chunks": 410,
+      "median_length": 205.0,
+      "TAR": 1.0,
+      "median_entropy": 4.719958679606001,
+      "depths": {
+        "2": 410
+      }
+    },
+    "cleaned": {
+      "chunks": 327,
+      "median_length": 297,
+      "TAR": 1.0,
+      "median_entropy": 5.138147696204827,
+      "depths": {
+        "2": 327
+      }
+    }
+  },
+  "seed": "1106",
+  "verification_codes": [
+    "7c7d73b6",
+    "ce165359"
+  ],
+  "report_placeholders": 0,
+  "pending": [
+    "Replace three rendered source comparisons with VS Code Compare screenshots",
+    "Student review, commit/push and v0.5-midterm Release"
+  ],
+  "reference_comparison": {
+    "source": "Teacher metrics photo supplied by user",
+    "evidence_path": "reports/figures/teacher_metrics_reference.jpg",
+    "evidence_sha256": "24484b07033b94902cbf628bfcc04ed32ef9d597cdfaf56d63f9915c8b42d5b4",
+    "reference": {
+      "median_length": 270.5,
+      "TAR": 1.0,
+      "SDV": 0.0,
+      "median_entropy": 5.0623172389748445
+    },
+    "reference_raw": {
+      "median_length": 205.0,
+      "TAR": 1.0,
+      "SDV": 0.0,
+      "median_entropy": 4.722966879142464
+    },
+    "matches": {
+      "median_length": false,
+      "TAR": true,
+      "SDV": true,
+      "median_entropy": false
+    }
+  }
+}

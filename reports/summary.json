@@ -1,0 +1,43 @@
+{
+  "cluster_summary": {
+    "Academic_Affairs": {
+      "count": 3,
+      "raw_chunks": 96,
+      "clean_chunks": 64
+    },
+    "Library_Information": {
+      "count": 3,
+      "raw_chunks": 248,
+      "clean_chunks": 209
+    },
+    "Student_Affairs": {
+      "count": 3,
+      "raw_chunks": 66,
+      "clean_chunks": 54
+    }
+  },
+  "total_raw_chunks": 410,
+  "total_clean_chunks": 327,
+  "metrics": {
+    "結構健全度 Phase_1_Mechanical_Sanity": {
+      " 形態可行性 Morphology_Median_Length": {
+        "Cleaned": 297.0,
+        "Raw": 205.0
+      },
+      "拓撲錨定率 Topology_TAR_Score": {
+        "Cleaned": 1.0,
+        "Raw": 1.0
+      },
+      "深度變異量 Depth_Variance_SDV": {
+        "Cleaned": 0.0,
+        "Raw": 0.0
+      }
+    },
+    "語意品質 Phase_2_Semantic_Quality": {
+      "夏農資訊熵 Information_Median_Entropy": {
+        "Cleaned": 5.138147696204827,
+        "Raw": 4.719958679606001
+      }
+    }
+  }
+}

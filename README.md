@@ -33,7 +33,17 @@
 - [x] 在 GitHub 網頁上打開 notebook，看得到儀表板
 
 ### Week 9：期中評量 (Midterm Assessment)
-- [x] 完成資料前處理報告 `DATA_REPORT.md` (位於專案根目錄)
+- [ ] 完成資料前處理報告 `DATA_REPORT.md`：draft saved; teacher reference photo checked and values entered; student review pending
 - [x] 完成指定 chunk 產生器 `notebooks/09_midterm_chunks.ipynb`
-- [x] 報告所需之截圖儲存於 `reports/figures/` 資料夾
+- [ ] 報告所需之截圖：dashboard saved; replace the three rendered source comparisons with VS Code Compare screenshots
 - [ ] 於 GitHub Release 建立 Tag `v0.5-midterm`
+
+### Midterm review status
+
+- Use `notebooks/01_Data_Ingestion.ipynb` for submission. It reruns the saved Docling Markdown through cleaning, chunking, metrics, and the dashboard; `USE_CACHED_MARKDOWN = False` enables fresh PDF conversion.
+- `01_Data_Injestion.ipynb` is a working compatibility copy. Its earlier version is preserved locally under `.ipynb_checkpoints/`.
+- Assigned chunks use SEED `1106`: verification codes `7c7d73b6` and `ce165359`.
+- `reports/prepare_midterm.py` rebuilds the three labelled source comparison figures. They are not VS Code screenshots.
+- Before submission: capture the required Compare screenshots, review the AI-assisted report and usage log, then commit/push and create Release `v0.5-midterm`.
+
+- Teacher reference evidence: `reports/figures/teacher_metrics_reference.jpg`; cleaned values 270.5, 100%, 0, and about 5.06.

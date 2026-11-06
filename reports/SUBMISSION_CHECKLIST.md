@@ -30,5 +30,5 @@ Sau khi thay ảnh, cập nhật ghi chú ở đầu báo cáo, mục 2, AI_USAG
 - Notebook nộp chính: `notebooks/01_Data_Ingestion.ipynb`. Tệp `01_Data_Injestion.ipynb` là bản tương thích tên cũ; không cần nộp cả hai nếu giảng viên chỉ yêu cầu một notebook.
 - `notebooks/09_midterm_chunks.ipynb` dùng SEED `1106`, mã `7c7d73b6` và `ce165359`.
 - Kiểm tra Markdown Preview hiển thị đủ bốn ảnh.
-- Sau khi hoàn tất mục ảnh ở trên, cập nhật checklist README, commit/push các tệp bài nộp và tạo GitHub Release với tag `v0.5-midterm`.
-- Không đưa PDF, dữ liệu JSON hàng loạt, `.venv` hoặc notebook sao lưu vào commit. Chưa thực hiện commit, push hay tạo Release trong lần hỗ trợ này.
+- Đã commit/push bản hiện tại lên `origin/main` (checkpoint `52a3d00`). Sau khi thay ảnh thật, cập nhật tài liệu, commit/push bổ sung và tạo GitHub Release với tag `v0.5-midterm`.
+- Không đưa PDF, dữ liệu JSON hàng loạt, `.venv` hoặc notebook sao lưu vào commit. Đã commit/push bản hiện tại; chưa tạo tag hoặc Release vì còn thiếu ảnh chụp Compare thật.

@@ -44,7 +44,7 @@
   "report_placeholders": 0,
   "pending": [
     "Replace three rendered source comparisons with VS Code Compare screenshots",
-    "Student review, commit/push and v0.5-midterm Release"
+    "Student review, final screenshot update and v0.5-midterm Release"
   ],
   "reference_comparison": {
     "source": "Teacher metrics photo supplied by user",
@@ -68,5 +68,10 @@
       "SDV": true,
       "median_entropy": false
     }
+  },
+  "git_checkpoint": {
+    "commit": "52a3d00",
+    "pushed_to": "origin/main",
+    "release_created": false
   }
 }

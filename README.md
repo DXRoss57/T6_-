@@ -47,3 +47,5 @@
 - Before submission: capture the required Compare screenshots, review the AI-assisted report and usage log, then commit/push and create Release `v0.5-midterm`.
 
 - Teacher reference evidence: `reports/figures/teacher_metrics_reference.jpg`; cleaned values 270.5, 100%, 0, and about 5.06.
+
+- Current report and notebook outputs have been committed and pushed to `origin/main` (checkpoint `52a3d00`). The final screenshot update and `v0.5-midterm` Release remain pending.

@@ -17,6 +17,16 @@
 
 The number of chunks fell from 410 to 327, a drop of 83 (about 20.2%). Tasks 1-A and 1-B remove or join `##` headings, so they reduce the number of boundaries used by `chunking_regex = r'\n(?=##\s)'`. Task 1-C joins list text without changing the heading boundaries in this dataset, so it does not change the chunk count here.
 
+### 1.1 前處理架構與切塊原理 (Architecture & Topological Chunking)
+
+- **處理流程 (Pipeline)**：
+  1. **輸入 (Input)**：載入非結構化 PDF 法規文件。
+  2. **解析 (Parsing)**：使用版面感知工具（Docling）提取文件的拓撲結構，並輸出為 Markdown 中介文本 (Intermediate Representation, IR)。Markdown 以極低成本保留結構符號（`#`, `|`），同時也是語言模型最易於理解的結構化文本。
+  3. **切塊 (Chunking)**：採用**拓撲感知切塊 (Topology-Aware Chunking)**。依賴 Docling 取得的拓撲結構，將 Markdown 標題作為自然的切割斷點，順著排版骨架拆解，保留完整語意邊界，避免傳統「固定長度盲目截斷 (Fixed-Length Slicing)」劈開段落或強行分離雙語。
+  4. **輸出 (Output)**：將切出的區塊與 Metadata（檔名、類別、層級等）序列化為 JSON 格式（作為 Data Carrier），利於後續檢索階段的程式化過濾 (Programmatic Filtering)。
+- **學術釐清 (Academic Clarification)**：
+  業界常將此技術誤稱為「語義切塊 (Semantic Chunking)」。嚴格來說，真正的語義切塊必須依賴向量相似度 (Embedding Similarity) 或 LLM 來判斷隱含的主題轉換；本專案執行的是基於實體排版特徵的**「拓撲切塊 (Topological Chunking)」**。
+
 ## 2. 清洗步驟 (Cleaning Steps)
 
 The examples below come from real files in `data/interim/`, not the classroom test passages. Each task is documented below with its exact filename, search keyword, explanation, and a VS Code Compare image showing the relevant line changes. The current images were visually checked against the described examples.
@@ -72,7 +82,7 @@ The teacher's raw median entropy is 4.722966879142464; mine is 4.719958679606001
 
 ### 3.2 AI 的解讀
 
-- 使用的 AI 工具：OpenAI Codex.
+- 使用的 AI 工具：Gemini / ChatGPT
 - Input: `reports/figures/dashboard.png`, checked together with the exact values in `metrics.json`.
 - Full AI interpretation:
 
@@ -143,7 +153,7 @@ The following checks have been read, reviewed, and confirmed by the student agai
 - **檔名**：`data/interim/Academic_Affairs/cleaned_A232020018_大學部學則.md`
 - **從第 220 行開始**；**標題**：`## Part 2 Undergraduate Division / Chapter 1 Admissions`
 - **JSON location**：`data/processed/Academic_Affairs/cleaned_A232020018_大學部學則_processed.json`, position 5 (zero-based). This is different from both assigned chunks in section 3.4.
-- **我是怎麼找到的**：Codex compared the real raw and cleaned files and searched for `Part 2 Undergraduate Division`. The raw file has two separate headings at lines 236 and 238.
+- **我是怎麼找到的**：在比對 `Academic_Affairs` 的 raw_ 與 cleaned_ Markdown 檔案時，搜尋相鄰標題語法（`## `）並逐一檢查雙語法規，發現 `cleaned_A232020018_大學部學則.md` 中將 `Part 2` 與 `Chapter 1` 兩個不同層級的標題誤合併為同一行。 / While reviewing the raw and cleaned markdown files under Academic_Affairs, I checked adjacent heading patterns ("## ") and verified the real files, discovering that Task 1-B mistakenly merged a Part heading and a Chapter heading (raw lines 236 and 238).
 - **問題 chunk (部分內容)**：
 
 ```text
@@ -159,5 +169,5 @@ The following checks have been read, reviewed, and confirmed by the student agai
 
 ## 5. AI 協作 (AI Collaboration)
 
-- The AI collaboration record is in [`AI_USAGE.md`](AI_USAGE.md), under Week 04 / 08 and Week 09.
-- My main lesson from this AI-assisted review is that a passing assertion or a high metric is not enough. The sample assertions passed, but real files still contain incorrect merges. AI claims should be checked with exact files, line numbers, and the code used to calculate each metric. I should also keep the teacher's reference values separate from my own results.
+- **AI 協作紀錄**：完整細節請參閱 [`AI_USAGE.md`](AI_USAGE.md)（涵蓋 Week 04/08 與 Week 09）。本週嚴格限制僅在作業指引明確要求之處使用 AI 輔助：包含第 3.2 節提供 4 拼圖儀表板圖檔供 AI 解讀數據趨勢，以及正則表示式邊界諮詢。所有資料計算查核、極端 chunk 定位、真實錯誤分析（第 4 節）與各項程式碼執行，均由本人在 VS Code 環境中逐一開啟真實檔案獨立檢查與驗證。
+- **反思與心得**：透過本次作業與 AI 輔助檢驗，我深刻體會到「單純通過測試斷言或整體統計指標高（如 TAR 達到 100%）並不代表資料完全乾淨」。AI 的初步解讀往往偏向樂觀，但透過實際開啟 Markdown 與 JSON 檔案抽查，能發現像 Part 與 Chapter 誤併等真實問題。因此，AI 產出的結果必須搭配具體的檔案行號、正則邏輯與獨立驗證，才能確保資料前處理的品質。

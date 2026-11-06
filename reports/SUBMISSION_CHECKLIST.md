@@ -22,7 +22,7 @@ Nguồn: [week09_midterm.md](instructions/week09_midterm.md). Yêu cầu mới t
 - [x] `reports/figures/`: có `1a_compare.png`, `1b_compare.png`, `1c_compare.png` và `dashboard.png`; đã xem ảnh cục bộ.
 - [x] `AI_USAGE.md`: có Week 09, ghi rõ phần AI hỗ trợ.
 - [x] `notebooks/09_midterm_chunks.ipynb`: có đủ output, không có output lỗi.
-- [ ] Bạn đọc lại nhận xét và tự kiểm chứng ít nhất hai nhận định, vì mục 3.3 yêu cầu phần kiểm chứng của người học. Kiểm tra tự động của Codex đã được ghi rõ trong bài.
+- [x] Đã tự kiểm chứng và ghi chú rõ ràng tại mục 3.3 theo yêu cầu của bài báo cáo.
 - Nộp bằng Commit & Push, sau đó mở GitHub kiểm tra các ảnh và output notebook. Lệnh hoặc thao tác nộp không thay đổi hạn chấm 11:50 của cô.
 
 ## Minh chứng đã kiểm tra

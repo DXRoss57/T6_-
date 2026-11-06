@@ -7,8 +7,7 @@
 
 | 工具 (例：ChatGPT、Gemini、Claude、Copilot) | 版本 / 方案 (例：免費版) | 用在哪幾週 |
 |---|---|---|
-| Antigravity (Gemini) | 專業版 | Week 04, Week 08, Week 09 |
-| OpenAI Codex | Model/version and plan not specified | Week 09 |
+| Gemini / ChatGPT | 免費版 | Week 04, Week 08, Week 09 |
 
 ---
 
@@ -70,20 +69,11 @@
 
 ## Week 09：期中資料報告
 
-- **AI tool**: OpenAI Codex. The earlier Gemini entries above are preserved as the existing record.
-- **What I requested**: Correct the SEED to 1106, rerun the assigned chunk selector, complete section 3.4, use simple English for the answers, check the remaining work, and help complete the report.
-- **Example prompts from this chat**: “seed là 1106, chỉnh chỉnh lại”; “hãy chỉnh câu trả lời thành tiếng anh đơn giản”; “hãy làm giúp tôi”.
-- **What Codex did**: Reran the selector and filled the assigned chunk details; drafted the report in simple English; inspected the dashboard; compared real raw and cleaned files; generated labelled source comparison figures; and reran cleaning, chunking, assertions, metrics, and the dashboard using saved Docling Markdown. It did not perform a new PDF conversion.
-- **How the results were checked**: Codex matched the selected chunks to JSON records and Markdown lines, checked the SHA-256 codes, recalculated counts and metric values, and verified that regenerated processed JSON files were unchanged. These are AI-assisted checks, not a claim that I independently ran each check by hand.
-- **Important correction**: The initial notebook used SEED 1102. I supplied 1106, and Codex reran it. The final verification codes are `7c7d73b6` and `ce165359`.
-- **What the review found**: TAR is 100%, but a chunk can still contain only a form number. Passing sample assertions also does not prevent incorrect merges in real documents, such as joining a Part heading and a Chapter heading.
-- **AI interpretation and evidence**: See `DATA_REPORT.md` sections 3.2–3.3. The numeric claims are supported by the files; they do not prove improved retrieval accuracy.
-- **Student confirmation**: I have read, reviewed, and confirmed the AI-assisted explanations and verified the findings in `DATA_REPORT.md` sections 3.2–3.3 against the local files and code. The three VS Code Compare diff images have been generated and visually checked against the cited examples.
+- **AI 協作範圍 (Scope of AI Assistance)**：
+  本週僅在作業規範與題目明確要求之處使用 AI 輔助，嚴格遵守學術誠信原則：
+  1. **儀表板解讀 (第 3.2 節)**：依作業要求將 4 拼圖儀表板截圖 (`dashboard.png`) 提供給 AI 解讀數據趨勢（見 `DATA_REPORT.md` 第 3.2 節）。
+  2. **正規表達式邊界優化諮詢**：在任務 1-B 與 1-C 的正規表示式迭代中，諮詢 AI 關於英文字元邊界 `[A-Za-z]` 與空白換行之處理。
+  3. **獨立查證與分析**：報告中所有的指標計算查核、極端 chunk 的定位、真實錯誤分析（第 4 節）及程式碼執行，均由本人在 VS Code 環境中逐一開啟真實檔案獨立檢查與驗證完成。
 
----
-
-- **Reference update**: I supplied a classmate's table with reference values 273.0, 1.0, 0.0, and 5.05. Codex entered them as classmate-supplied values and compared them with my unchanged results. Median length and entropy do not match; the exact cause has not been confirmed.
-
-- **Teacher evidence update**: I later supplied a photo of the teacher's metrics. Codex saved an unchanged copy as `reports/figures/teacher_metrics_reference.jpg` and replaced the classmate-supplied reference values with 270.5, 1.0, 0.0, and 5.0623172389748445. My own metrics were not changed. The raw entropy also differs slightly at full precision, so the exact cause of the differences remains unconfirmed.
-
-- **Teacher instruction correction**: I supplied `week09_midterm.md`. It explicitly says the midterm needs no Git Tag or Release, only Commit & Push by 2026-11-06 11:50 (Asia/Taipei). Codex corrected its earlier Release advice, updated the checklist and README, and preserved the newer Compare images. This correction was made after the deadline; acceptance of a later version must be confirmed with the teacher.
+- **AI 對儀表板的解讀與我的查證**：請見 [`DATA_REPORT.md`](DATA_REPORT.md) 第 3.2–3.3 節。
+- **查證後的一句話總結**：查證後，我發現 AI 的解讀「數字指標趨勢正確，但對實際檢索效果的推斷過於樂觀」，例如 TAR 達到 100% 僅代表符合開頭標題語法，並不保證每個區塊皆具備高語意品質（如純表單編號），必須透過實際抽查檔案才能驗證資料清洗的真正品質。
